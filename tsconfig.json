@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+      "target": "ES2023",
+      "module": "es6",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./*"]
+      },
+      "resolveJsonModule": true,
+      "moduleResolution": "node",
+      "noEmit": true
+    },
+    "exclude": [
+      "node_modules",
+      "dist",
+      "build",
+      "out",
+      ".next"
+    ],
+    "include": [
+      "packages/**/*",
+    ]
+  }
