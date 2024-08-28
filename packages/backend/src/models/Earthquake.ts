@@ -1,9 +1,13 @@
-import mongoose from 'mongoose';
+import { Schema, model, InferRawDocType } from 'mongoose';
 
-const earthquakeSchema = new mongoose.Schema({
+const earthquakeSchemaDefenition = {
   location: { type: String, required: true },
   magnitude: { type: Number, required: true },
   date: { type: Date, required: true },
-});
+};
 
-export const Earthquake = mongoose.model('Earthquake', earthquakeSchema);
+const earthquakeSchema = new Schema(earthquakeSchemaDefenition);
+
+export type Earthquake = InferRawDocType<typeof earthquakeSchemaDefenition>;
+
+export const EarthquakeModel = model('Earthquake', earthquakeSchema);
