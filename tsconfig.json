@@ -1,14 +1,14 @@
 {
     "compilerOptions": {
       "target": "ES2023",
-      "module": "es6",
+      "module": "esnext",
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true,
       "baseUrl": ".",
       "paths": {
-        "@/*": ["./*"]
+        "@/*": ["./src/*"]
       },
       "resolveJsonModule": true,
       "moduleResolution": "node",
