@@ -1,4 +1,10 @@
-import { Schema, model, InferRawDocType } from 'mongoose';
+import { Schema, model } from 'mongoose';
+
+export interface Earthquake {
+  location: string;
+  magnitude: number;
+  date: Date;
+}
 
 const earthquakeSchemaDefenition = {
   location: { type: String, required: true },
@@ -6,8 +12,6 @@ const earthquakeSchemaDefenition = {
   date: { type: Date, required: true },
 };
 
-const earthquakeSchema = new Schema(earthquakeSchemaDefenition);
-
-export type Earthquake = InferRawDocType<typeof earthquakeSchemaDefenition>;
+const earthquakeSchema = new Schema<Earthquake>(earthquakeSchemaDefenition);
 
 export const EarthquakeModel = model('Earthquake', earthquakeSchema);

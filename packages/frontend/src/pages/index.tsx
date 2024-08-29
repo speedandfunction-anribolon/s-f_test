@@ -1,5 +1,4 @@
-import React from 'react';
-import Button from '@mui/material/Button';
+import React, { useMemo, useState } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -8,18 +7,31 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-// import SaveIcon from '@mui/icons-material/Save';
 
 import { useGetEarthquakesQuery } from '../_generated';
+import CreateEarthquake from '../components/CreateEarthquake';
+import EarthquakeRow from '../components/EarthquakeRow';
+
+const PER_PAGE = 20;
 
 const EarthquakeList = () => {
   const { loading, error, data: earthquakes } = useGetEarthquakesQuery();
+  const [page, setPage] = useState(0);
+
+  const earthquakesToShow = useMemo(
+    () =>
+      (earthquakes?.getEarthquakes || []).slice(
+        page * PER_PAGE,
+        page * PER_PAGE + PER_PAGE
+      ),
+    [earthquakes, page]
+  );
 
   if (loading) return <Typography>Loading...</Typography>;
   if (error) return <Typography>Error: {error.message}</Typography>;
+  if (!earthquakes?.getEarthquakes) return null;
 
   return (
     <Container>
@@ -38,30 +50,22 @@ const EarthquakeList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {earthquakes?.getEarthquakes?.map(
-              ({ id, location, magnitude, date }) => (
-                <TableRow key={id}>
-                  <TableCell component="th" scope="row">
-                    {location}
-                  </TableCell>
-                  <TableCell align="right">{magnitude}</TableCell>
-                  <TableCell align="right">
-                    {new Date(parseInt(date)).toLocaleString()}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Button>
-                      <DeleteIcon />
-                    </Button>
-                    <Button>
-                      <EditIcon />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              )
-            )}
+            {earthquakesToShow.map((earthquake) => (
+              <EarthquakeRow earthquake={earthquake} key={earthquake.id} />
+            ))}
           </TableBody>
         </Table>
+        <TablePagination
+          component="div"
+          count={earthquakes?.getEarthquakes?.length || 0}
+          rowsPerPage={PER_PAGE}
+          page={page}
+          onPageChange={(_, pageNum) => setPage(pageNum)}
+          rowsPerPageOptions={[]}
+        />
       </TableContainer>
+
+      <CreateEarthquake />
     </Container>
   );
 };

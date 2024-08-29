@@ -23,7 +23,9 @@ export const resolvers = {
         { location, magnitude, date },
         { new: true }
       ),
-    deleteEarthquake: async (_: unknown, { id }: Id) =>
-      EarthquakeModel.findByIdAndDelete(id),
+    deleteEarthquake: async (_: unknown, { id }: Id) => {
+      await EarthquakeModel.findByIdAndDelete(id);
+      return true;
+    },
   },
 };

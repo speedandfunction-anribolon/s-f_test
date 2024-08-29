@@ -15,3 +15,16 @@ mutation CreateEarthquake($location: String!, $magnitude: Float!, $date: String!
         date
     }
 }
+
+mutation UpdateEarthquake($id: ID!, $location: String, $magnitude: Float, $date: String) {
+    updateEarthquake(id: $id, location: $location, magnitude: $magnitude, date: $date) {
+      id
+      location
+      magnitude
+      date
+    }
+  }
+
+mutation DeleteEarthquake($id: ID!) {
+    deleteEarthquake(id: $id)
+}

@@ -4,7 +4,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "nodemon",
-    "build": "tsc"
+    "build": "tsc",
+    "parseCSV": "node --loader ts-node/esm --experimental-specifier-resolution=node --no-warnings --loader ts-node/esm scripts/loadEarthquakes.ts"
   },
   "description": "",
   "type": "module",
